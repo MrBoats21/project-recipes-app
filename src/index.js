@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import RecipeProvider from './contex/RecipeProvider';
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <RecipeProvider>
+    <BrowserRouter>
+      <Router>
+        <App />
+      </Router>
+    </BrowserRouter>
+
+  </RecipeProvider>,
   document.getElementById('root'),
 );
 
