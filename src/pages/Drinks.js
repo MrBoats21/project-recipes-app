@@ -2,17 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../componets/Header';
 
-function Recipes({ location }) {
+export default function Drinks({ location: { pathname } }) {
   return (
     <div>
-      {location.pathname === '/foods' && <Header title="Foods" />}
+      {pathname === '/drinks' && <Header title="Drinks" />}
     </div>
-
   );
 }
 
-export default Recipes;
-
-Recipes.propTypes = {
+Drinks.propTypes = {
   location: PropTypes.shape({}),
 }.isRequired;
