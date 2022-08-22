@@ -4,13 +4,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
 
 import { Login, Recipes, Profile, RecipeDetails,
-  RecipeInProgress, DoneRecipes, FavoriteRecipes } from './pages';
+  RecipeInProgress, DoneRecipes, FavoriteRecipes, Drinks } from './pages';
 
 function App() {
   return (
     <Switch>
       <Route path="/profile" component={ Profile } />
       <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+      <Route path="/drinks" component={ Drinks } />
+      <Route path="/done-recipes" component={ DoneRecipes } />
+      <Route path="/profile" component={ Profile } />
 
       <Route
         path="/foods"
@@ -51,7 +54,6 @@ function App() {
         }
       />
 
-      <Route path="/done-recipes" component={ DoneRecipes } />
       <Route path="/" component={ Login } />
 
     </Switch>
