@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -6,6 +7,7 @@ function Login() {
   const [isLoginEnable, setIsLoginEnable] = useState(false);
 
   const isEmailEnable = (emailTest) => /\S+@\S+\.\S+/.test(emailTest);
+  const history = useHistory();
 
   useEffect(() => {
     const passwordVerification = () => {
@@ -14,6 +16,10 @@ function Login() {
     };
     setIsLoginEnable(passwordVerification() && isEmailEnable(email));
   }, [email, password]);
+
+  const setLocalStorage = () => localStorage.setItem('user', JSON.stringify({ email }));
+  const setMealToken = () => localStorage.setItem('mealsToken', 1);
+  const setcocktailsToken = () => localStorage.setItem('cocktailsToken', 1);
 
   return (
     <section>
@@ -39,6 +45,12 @@ function Login() {
         data-testid="login-submit-btn"
         type="button"
         disabled={ !isLoginEnable }
+        onClick={ () => {
+          setLocalStorage();
+          setMealToken();
+          setcocktailsToken();
+          history.push('/foods');
+        } }
       >
         Logar
       </button>
