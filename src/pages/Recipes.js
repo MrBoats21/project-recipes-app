@@ -7,7 +7,6 @@ function Recipes({ location }) {
     <div>
       {location.pathname === '/foods' && <Header title="Foods" />}
     </div>
-
   );
 }
 

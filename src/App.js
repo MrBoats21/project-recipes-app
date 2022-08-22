@@ -3,10 +3,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
 
-import Drinks from './pages/Drinks';
-
 import { Login, Recipes, Profile, RecipeDetails,
-  RecipeInProgress, DoneRecipes, FavoriteRecipes } from './pages';
+  RecipeInProgress, DoneRecipes, FavoriteRecipes, Drinks } from './pages';
 
 function App() {
   return (
