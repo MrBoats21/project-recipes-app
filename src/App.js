@@ -5,23 +5,26 @@ import { Switch, Route } from 'react-router-dom';
 
 import { Login, Recipes, Profile, RecipeDetails,
   RecipeInProgress, DoneRecipes, FavoriteRecipes } from './pages';
-import RecipeProvider from './contex/RecipeProvider';
 
 function App() {
   return (
-    <RecipeProvider>
-      <Switch>
-        <Route path="/recipes" component={ Recipes } />
-        <Route path="/profile" component={ Profile } />
-        <Route path="/recipeDetails" component={ RecipeDetails } />
-        <Route path="/recipeInProgress" component={ RecipeInProgress } />
-        <Route path="/DoneRecipes" component={ DoneRecipes } />
-        <Route path="/FavoriteRecipes" component={ FavoriteRecipes } />
-        <Route path="/" component={ Login } />
+    <Switch>
+      <Route path="/profile" component={ Profile } />
+      <Route path="/favorite-recipes" component={ FavoriteRecipes } />
 
-      </Switch>
+      <Route path="/foods/:recipeId/in-progress" component={ RecipeInProgress } />
+      <Route path="/drinks/:recipeId/in-progress" component={ RecipeInProgress } />
 
-    </RecipeProvider>
+      <Route path="/foods/:recipeId" component={ RecipeDetails } />
+      <Route path="/drinks/:recipeId" component={ RecipeDetails } />
+
+      <Route path="/foods" component={ Recipes } />
+      <Route path="/drinks" component={ Recipes } />
+
+      <Route path="/done-recipes" component={ DoneRecipes } />
+      <Route path="/" component={ Login } />
+
+    </Switch>
   );
 }
 
