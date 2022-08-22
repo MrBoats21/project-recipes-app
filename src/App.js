@@ -11,12 +11,49 @@ function App() {
   return (
     <RecipeProvider>
       <Switch>
-        <Route path="/recipes" component={ Recipes } />
         <Route path="/profile" component={ Profile } />
-        <Route path="/recipeDetails" component={ RecipeDetails } />
-        <Route path="/recipeInProgress" component={ RecipeInProgress } />
-        <Route path="/DoneRecipes" component={ DoneRecipes } />
-        <Route path="/FavoriteRecipes" component={ FavoriteRecipes } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+
+        <Route
+          path="/foods"
+          render={
+            (props) => <Recipes { ...props } type="foods" />
+          }
+        />
+        <Route
+          path="/drinks"
+          render={
+            (props) => <Recipes { ...props } type="drinks" />
+          }
+        />
+
+        <Route
+          path="/drinks/:id-da-receita"
+          render={
+            (props) => <RecipeDetails { ...props } type="drinks" />
+          }
+        />
+        <Route
+          path="/drinks/:id-da-receita"
+          render={
+            (props) => <RecipeDetails { ...props } type="drinks" />
+          }
+        />
+
+        <Route
+          path="/foods/:id-da-receita/in-progress"
+          render={
+            (props) => <RecipeInProgress { ...props } type="foods" />
+          }
+        />
+        <Route
+          path="/drinks/:id-da-receita/in-progress"
+          render={
+            (props) => <RecipeInProgress { ...props } type="drinks" />
+          }
+        />
+
+        <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/" component={ Login } />
 
       </Switch>
