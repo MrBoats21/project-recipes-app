@@ -5,4 +5,3 @@ export { default as FavoriteRecipes } from './FavoriteRecipes';
 export { default as RecipeDetails } from './RecipeDetails';
 export { default as RecipeInProgress } from './RecipeInProgress';
 export { default as Recipes } from './Recipes';
-export { default as Drinks } from './Drinks';
