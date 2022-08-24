@@ -13,7 +13,7 @@ function Recipes({ location }) {
       console.log(test);
     };
     requestApi();
-  }, []);
+  });
   const foodOrDrink = () => {
     if (path === '/foods') return ('Foods');
     if (path === '/drinks') return ('Drinks');
@@ -22,7 +22,6 @@ function Recipes({ location }) {
     <div>
       <Header title={ foodOrDrink() } />
       <Footer />
-
     </div>
   );
 }
