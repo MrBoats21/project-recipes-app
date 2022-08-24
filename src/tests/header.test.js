@@ -18,5 +18,4 @@ describe('Verifica a cobertura do componente Header',()=> {
       userEvent.click(SEARCH_BTN);
       expect(SEARCH_BAR).not.toBeInTheDocument();
     });
-
   });
