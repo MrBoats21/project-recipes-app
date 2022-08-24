@@ -10,7 +10,7 @@ function Profile() {
 
   const getFromLocalStorage = () => {
     if (localStorage.length === 0) {
-      setUserEmail('Email não definido');
+      setUserEmail('E-mail não definido');
     } else {
       const email = JSON.parse(localStorage.getItem('user'));
       setUserEmail(email.email);
