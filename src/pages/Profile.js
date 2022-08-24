@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../componets/Header';
 import Footer from '../componets/Footer';
 
 function Profile() {
   const history = useHistory();
-  const email = JSON.parse(localStorage.getItem('user'));
+
+  const [userEmail, setUserEmail] = useState();
+
+  const getFromLocalStorage = () => {
+    if (localStorage.length === 0) {
+      setUserEmail('Email não definido');
+    } else {
+      const email = JSON.parse(localStorage.getItem('user'));
+      setUserEmail(email.email);
+    }
+  };
+
+  useEffect(() => {
+    getFromLocalStorage();
+  }, []);
 
   const logOff = () => {
     history.push('/');
@@ -23,7 +37,7 @@ function Profile() {
     <div>
       <Header title="Profile" />
 
-      <h3 data-testid="profile-email">{`${email.email}`}</h3>
+      <h3 data-testid="profile-email">{`${userEmail}`}</h3>
 
       <button
         type="button"
