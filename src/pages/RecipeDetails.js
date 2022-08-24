@@ -15,50 +15,49 @@ function RecipeDetails({ match }) {
     video: '',
   }]);
   const [recomendacao, setRecomendacao] = useState([]);
-
-  async function receiverF() {
-    const recomend = await recomenBebidas();
-    const result = await foods(recipeId);
-    const ingr = Object.entries(result)
-      .filter((a) => a[0].includes('strIngredient') && a[1] !== '');
-    const instr = Object.entries(result)
-      .filter((a) => a[0].includes('strMeasure') && a[1] !== '');
-
-    setRecomendacao(recomend);
-    setReceitaFood([{
-      img: result.strMealThumb,
-      titulo: result.strMeal,
-      cat: result.strCategory,
-      ingre: ingr.map((a) => a[1]),
-      qtd: instr.map((a) => a[1]),
-      inst: result.strInstructions,
-      video: result.strYoutube,
-    }]);
-  }
-  async function receiverD() {
-    const recomend = await recomenComidas();
-    const result = await drinks(recipeId);
-    setRecomendacao(recomend);
-    const ingr = Object.entries(result)
-      .filter((a) => a[0].includes('strIngredient') && a[1] !== null);
-    const instr = Object.entries(result)
-      .filter((a) => a[0].includes('strMeasure') && a[1] !== null);
-    setReceitaFood([{
-      img: result.strDrinkThumb,
-      titulo: result.strDrink,
-      cat: result.strAlcoholic,
-      ingre: ingr.map((a) => a[1]),
-      qtd: instr.map((a) => a[1]),
-      inst: result.strInstructions,
-    }]);
-  }
   useEffect(() => {
+    async function receiverF() {
+      const recomend = await recomenBebidas();
+      const result = await foods(recipeId);
+      const ingr = Object.entries(result)
+        .filter((a) => a[0].includes('strIngredient') && a[1] !== '');
+      const instr = Object.entries(result)
+        .filter((a) => a[0].includes('strMeasure') && a[1] !== '');
+
+      setRecomendacao(recomend);
+      setReceitaFood([{
+        img: result.strMealThumb,
+        titulo: result.strMeal,
+        cat: result.strCategory,
+        ingre: ingr.map((a) => a[1]),
+        qtd: instr.map((a) => a[1]),
+        inst: result.strInstructions,
+        video: result.strYoutube,
+      }]);
+    }
+    async function receiverD() {
+      const recomend = await recomenComidas();
+      const result = await drinks(recipeId);
+      setRecomendacao(recomend);
+      const ingr = Object.entries(result)
+        .filter((a) => a[0].includes('strIngredient') && a[1] !== null);
+      const instr = Object.entries(result)
+        .filter((a) => a[0].includes('strMeasure') && a[1] !== null);
+      setReceitaFood([{
+        img: result.strDrinkThumb,
+        titulo: result.strDrink,
+        cat: result.strAlcoholic,
+        ingre: ingr.map((a) => a[1]),
+        qtd: instr.map((a) => a[1]),
+        inst: result.strInstructions,
+      }]);
+    }
     if (tipo === 'foods') {
       receiverF();
     } else {
       receiverD();
     }
-  }, []);
+  }, [recipeId, tipo]);
 
   return (
     <div>
@@ -139,7 +138,6 @@ function RecipeDetails({ match }) {
     </div>
   );
 }
-
 RecipeDetails.propTypes = {
   match: PropTypes.shape({
     url: PropTypes.string,
@@ -148,5 +146,4 @@ RecipeDetails.propTypes = {
     }),
   }).isRequired,
 };
-
 export default RecipeDetails;
