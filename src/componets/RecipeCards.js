@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
-import Proptypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import recipeContext from '../contex/recipeContext';
 
-function RecipeCards({ type }) {
+function RecipeCards() {
+  const { location: { pathname } } = useHistory();
   const { apiResponse } = useContext(recipeContext);
 
   const renderCards = () => {
     const cards = apiResponse.map((c, i) => {
-      const idKey = type === 'foods' ? 'idMeal' : 'idDrink';
-      const urlThumb = type === 'foods' ? 'strMealThumb' : 'strDrinkThumb';
-      const name = type === 'foods' ? 'strMeal' : 'strDrink';
+      const idKey = pathname === '/foods' ? 'idMeal' : 'idDrink';
+      const urlThumb = pathname === '/foods' ? 'strMealThumb' : 'strDrinkThumb';
+      const name = pathname === '/foods' ? 'strMeal' : 'strDrink';
 
       return (
         <Link
-          to={ `/${type}/${c[idKey]}` }
+          to={ `${pathname}/${c[idKey]}` }
           key={ c[idKey] }
           data-testid={ `${i}-recipe-card` }
         >
@@ -36,9 +36,5 @@ function RecipeCards({ type }) {
     </div>
   );
 }
-
-RecipeCards.propTypes = {
-  type: Proptypes.string,
-}.isRequired;
 
 export default RecipeCards;

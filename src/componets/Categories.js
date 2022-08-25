@@ -40,6 +40,13 @@ function Categories() {
     }
   };
 
+  const handleAllButton = async () => {
+    setbuttonPressed('');
+    const lastItemIndex = 12;
+    const response = await getInitialRecipes(pathname);
+    setApiResponse(response.slice(0, lastItemIndex));
+  };
+
   const renderCategories = () => {
     const lastItem = 5;
     return (
@@ -59,6 +66,14 @@ function Categories() {
 
   return (
     <div>
+      <button
+        type="button"
+        onClick={ () => handleAllButton() }
+        data-testid="All-category-filter"
+      >
+        All
+
+      </button>
       { renderCategories() }
     </div>
     // <label htmlFor="">

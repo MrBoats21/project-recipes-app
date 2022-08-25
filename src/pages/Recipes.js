@@ -24,7 +24,6 @@ function Recipes({ history }) {
     const requestApi = async () => {
       const lastItemIndex = 12;
       const response = await getInitialRecipes(path);
-      console.log(response, 'teste');
       setApiResponse(response.slice(0, lastItemIndex));
     };
     requestApi();
@@ -33,17 +32,13 @@ function Recipes({ history }) {
     setMainLoading(false);
   }, [apiResponse, setMainLoading]);
 
-  const foodOrDrink = () => {
-    if (path === '/foods') return ('Foods');
-    if (path === '/drinks') return ('Drinks');
-  };
-
   return (
     <div>
-      <Header title={ foodOrDrink() } />
+      { path === '/foods' && <Header title="Foods" /> }
+      { path === '/drinks' && <Header title="Drinks" /> }
       <Categories />
       { mainLoading && <Loading />}
-      { !mainLoading && <RecipeCards type={ foodOrDrink().toLowerCase() } />}
+      { !mainLoading && <RecipeCards />}
       <Footer />
 
     </div>
