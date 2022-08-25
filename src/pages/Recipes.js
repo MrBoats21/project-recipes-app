@@ -31,7 +31,7 @@ function Recipes({ history }) {
   useEffect(() => {
     setMainLoading(false);
   }, [apiResponse, setMainLoading]);
-  
+
   return (
     <div>
       { path === '/foods' && <Header title="Foods" /> }
