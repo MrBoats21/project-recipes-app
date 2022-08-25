@@ -37,8 +37,6 @@ function RecipeDetails({ match }) {
     }
     async function receiverD() {
       const recomend = await recomenComidas();
-      console.log(recomend);
-
       const result = await drinks(recipeId);
       setRecomendacao(recomend);
       const ingr = Object.entries(result)

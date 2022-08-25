@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../styles/footer.css';
 
 import { useHistory } from 'react-router-dom';
+import recipeContext from '../contex/recipeContext';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
 function Footer() {
   const history = useHistory();
+  const { setMainLoading } = useContext(recipeContext);
 
   const changePageBtn = (type) => {
+    const { pathname } = history.location;
+    if (!pathname.includes(type)) {
+      setMainLoading(true);
+    }
     history.push(`/${type}`);
   };
 
