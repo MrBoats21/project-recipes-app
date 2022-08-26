@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { drinks, foods } from '../api/foods';
+import { useHistory } from 'react-router-dom';
 import useUpdate from '../Hooks/useUpdate';
+import { receiverD, receiverF, checkStorage } from '../helpers/functions';
 
 const copy = require('clipboard-copy');
 
@@ -17,54 +18,19 @@ function RecipeInProgress({ match }) {
     inst: '',
   }]);
   const [usedIngredients, setUsedIngredients] = useState([]);
+  const [disabled, setDisabled] = useState([true]);
+  const [copyed, setCopyed] = useState([false]);
+  const history = useHistory();
 
   useEffect(() => {
-    async function receiverF() {
-      const result = await foods(recipeId);
-      const ingr = Object.entries(result)
-        .filter((a) => a[0].includes('strIngredient') && a[1] !== '' && a[1] !== null);
-      const instr = Object.entries(result)
-        .filter((a) => a[0].includes('strMeasure') && a[1] !== '' && a[1] !== null);
-
-      setReceitaFood([{
-        img: result.strMealThumb,
-        titulo: result.strMeal,
-        cat: result.strCategory,
-        ingre: ingr.map((a) => a[1]),
-        qtd: instr.map((a) => a[1]),
-        inst: result.strInstructions,
-      }]);
-    }
-    async function receiverD() {
-      const result = await drinks(recipeId);
-      const ingr = Object.entries(result)
-        .filter((a) => a[0].includes('strIngredient') && a[1] !== '' && a[1] !== null);
-      const instr = Object.entries(result)
-        .filter((a) => a[0].includes('strMeasure') && a[1] !== '' && a[1] !== null);
-      setReceitaFood([{
-        img: result.strDrinkThumb,
-        titulo: result.strDrink,
-        cat: result.strAlcoholic,
-        ingre: ingr.map((a) => a[1]),
-        qtd: instr.map((a) => a[1]),
-        inst: result.strInstructions,
-      }]);
-    }
     if (tipo === 'foods') {
-      receiverF();
+      receiverF(recipeId, setReceitaFood);
     } else {
-      receiverD();
+      receiverD(recipeId, setReceitaFood);
     }
   }, [recipeId, tipo]);
 
   useEffect(() => {
-    const checkStorage = () => {
-      let key = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (key === null) {
-        key = { cocktails: {}, meals: {} };
-        localStorage.setItem('inProgressRecipes', JSON.stringify(key));
-      }
-    };
     checkStorage();
   }, []);
 
@@ -90,6 +56,19 @@ function RecipeInProgress({ match }) {
     setStorage();
   }, [usedIngredients, recipeId, url]);
 
+  useEffect(() => {
+    const verifyCheckboxes = () => {
+      const iLength = usedIngredients.length;
+      const boxList = document.getElementsByClassName('checkboxes');
+      if (iLength === boxList.length) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+    };
+    verifyCheckboxes();
+  }, [usedIngredients]);
+
   const setIngredientsList = (iName, { target }) => {
     if (target.checked) {
       setUsedIngredients([...usedIngredients, iName]);
@@ -113,9 +92,13 @@ function RecipeInProgress({ match }) {
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ () => { copy(`http://localhost:3000${url}`); } }
+            onClick={ () => {
+              copy(`http://localhost:3000/${tipo}/${recipeId}`);
+              setCopyed(true);
+            } }
           >
             Compartilhar
+            {copyed === true ? <p>Link copied!</p> : ''}
           </button>
 
           <button
@@ -135,6 +118,7 @@ function RecipeInProgress({ match }) {
                 <input
                   key={ index }
                   type="checkbox"
+                  className="checkboxes"
                   value={ { b } }
                   checked={ usedIngredients.includes(b) }
                   onChange={ (event) => setIngredientsList(b, event) }
@@ -154,6 +138,8 @@ function RecipeInProgress({ match }) {
       <button
         data-testid="finish-recipe-btn"
         type="button"
+        onClick={ () => { history.push('/done-recipes'); } }
+        disabled={ disabled }
       >
         Finalizar receita
       </button>

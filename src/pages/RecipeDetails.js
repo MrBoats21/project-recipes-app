@@ -81,8 +81,7 @@ function RecipeDetails({ match }) {
                 {' '}
                 -
                 {' '}
-                {                {b}
-}
+                { { b } }
               </li>
             ))}
           </ol>
