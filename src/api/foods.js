@@ -35,3 +35,15 @@ export async function recomenComidas() {
   }
   return recomendacao;
 }
+
+export function favoritos(payload) {
+  console.log(payload);
+  const receitas = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  console.log(receitas);
+  if (receitas !== null) {
+    const dados = [...receitas, payload];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(dados));
+  } else {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([payload]));
+  }
+}
