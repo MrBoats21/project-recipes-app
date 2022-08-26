@@ -124,7 +124,7 @@ function RecipeDetails({ match }) {
             <h4 data-testid={ `${i}-recomendation-title` }>
               {tipo === 'foods' ? a.strDrink : a.strMeal}
             </h4>
-            <p>{a.strAlcoholic}</p>
+            <p>{tipo === 'foods' ? a.strAlcoholic : a.strCategory }</p>
           </div>
         ))}
       </div>
