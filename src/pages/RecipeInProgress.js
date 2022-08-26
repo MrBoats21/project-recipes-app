@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { drinks, foods } from '../api/foods';
+import useUpdate from '../Hooks/useUpdate';
 
 const copy = require('clipboard-copy');
 
@@ -16,7 +17,6 @@ function RecipeInProgress({ match }) {
     inst: '',
   }]);
   const [usedIngredients, setUsedIngredients] = useState([]);
-  const [storageIngredients, setStorageIngredients] = useState([]);
 
   useEffect(() => {
     async function receiverF() {
@@ -58,53 +58,40 @@ function RecipeInProgress({ match }) {
   }, [recipeId, tipo]);
 
   useEffect(() => {
+    const checkStorage = () => {
+      let key = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (key === null) {
+        key = { cocktails: {}, meals: {} };
+        localStorage.setItem('inProgressRecipes', JSON.stringify(key));
+      }
+    };
+    checkStorage();
+  }, []);
+
+  useEffect(() => {
+    const getStorage = () => {
+      const key = url.includes('food') ? 'meals' : 'cocktails';
+      const storage = JSON.parse(localStorage.getItem('inProgressRecipes'))[key];
+      setUsedIngredients(storage[recipeId] ? storage[recipeId] : []);
+    };
+    getStorage();
+  }, [recipeId, url]);
+
+  useUpdate(() => {
     const setStorage = () => {
       let key = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const meals = key ? key.meals : undefined;
-      const cocktails = key ? key.cocktails : undefined;
-      if (url.includes('foods')) {
-        if (key === null) {
-          key = {
-            cocktails: {},
-            meals: {
-              [recipeId]: [...usedIngredients],
-            },
-          };
-        } else {
-          meals[recipeId] = usedIngredients;
-          key = { ...key, meals };
-        }
-      } else if (url.includes('drinks')) {
-        if (key === null) {
-          key = {
-            cocktails: {
-              [recipeId]: [...usedIngredients],
-            },
-            meals: {},
-          };
-        } else {
-          cocktails[recipeId] = usedIngredients;
-          key = { ...key, cocktails };
-        }
-      }
+      const changedKey = url.includes('foods') ? key.meals : key.cocktails;
+      const keyName = url.includes('foods') ? 'meals' : 'cocktails';
+      changedKey[recipeId] = usedIngredients;
+      key = { ...key, [keyName]: changedKey };
+
       localStorage.setItem('inProgressRecipes', JSON.stringify(key));
     };
     setStorage();
   }, [usedIngredients, recipeId, url]);
 
-  useEffect(() => {
-    const getStorage = () => {
-      const key = url.includes('food') ? 'meals' : 'cocktail';
-      const storage = JSON
-        .parse(localStorage.getItem('inProgressRecipes'))[key];
-      console.log(storage);
-      setStorageIngredients(storage);
-    };
-    getStorage();
-  }, [recipeId, url, usedIngredients]);
-
-  const setIngredientsList = (iName, event) => {
-    if (event.target.checked) {
+  const setIngredientsList = (iName, { target }) => {
+    if (target.checked) {
       setUsedIngredients([...usedIngredients, iName]);
     } else {
       setUsedIngredients([...usedIngredients.filter((item) => item !== iName)]);
@@ -149,10 +136,8 @@ function RecipeInProgress({ match }) {
                   key={ index }
                   type="checkbox"
                   value={ { b } }
-                  checked={ () => {
-                    storageIngredients.includes(b);
-                  } }
-                  onClick={ (event) => setIngredientsList(b, event) }
+                  checked={ usedIngredients.includes(b) }
+                  onChange={ (event) => setIngredientsList(b, event) }
                 />
                 {`${b} - ${a.qtd[index]}`}
               </label>
