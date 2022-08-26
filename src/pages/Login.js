@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import foodLogo from '../images/goodFoodLogo.png';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -22,26 +23,45 @@ function Login() {
   const setcocktailsToken = () => localStorage.setItem('cocktailsToken', 1);
 
   return (
-    <section>
-      <label htmlFor="inputEmail">
-        email
-        <input
-          data-testid="email-input"
-          type="text"
-          name="inputEmail"
-          onChange={ ({ target }) => setEmail(target.value) }
+    <section className="vh-100 d-flex flex-column justify-content-center">
+      <div>
+        <img
+          className="img-fluid"
+          alt="Good Food Logo"
+          src={ foodLogo }
         />
-      </label>
-      <label htmlFor="inputPassword">
-        Password
-        <input
-          data-testid="password-input"
-          type="email"
-          name="inputPassword"
-          onChange={ ({ target }) => setPassword(target.value) }
-        />
-      </label>
+      </div>
+      <div className="w-100 justify-content-center input-group">
+        <label
+          htmlFor="inputEmail"
+          className="d-flex flex-column justify-content-center"
+        >
+          Email
+          <input
+            className="form-control w-100"
+            data-testid="email-input"
+            type="text"
+            name="inputEmail"
+            onChange={ ({ target }) => setEmail(target.value) }
+          />
+        </label>
+        <label
+          htmlFor="inputPassword"
+          className="d-flex flex-column justify-content-center"
+        >
+          Password
+          <input
+            className="form-control text-muted"
+            data-testid="password-input"
+            type="email"
+            name="inputPassword"
+            onChange={ ({ target }) => setPassword(target.value) }
+          />
+        </label>
+      </div>
       <button
+        className="w-50 align-self-center mt-2
+        btn bg-warning rounded text-body font-weight-bold"
         data-testid="login-submit-btn"
         type="button"
         disabled={ !isLoginEnable }
@@ -52,10 +72,12 @@ function Login() {
           history.push('/foods');
         } }
       >
-        Logar
+        LOGAR
       </button>
     </section>
   );
 }
 
 export default Login;
+
+// ref da imagem do logo https://similarpng.com/good-food-logo-design-on-transparent-background-png/#getdownload
