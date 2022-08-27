@@ -20,7 +20,6 @@ function Footer() {
 
   return (
     <footer data-testid="footer">
-      <h1>Footer</h1>
       <button
         type="button"
         className="footerButton"

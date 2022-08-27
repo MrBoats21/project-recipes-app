@@ -3,11 +3,37 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import recipeContext from '../contex/recipeContext';
 
+import { getbyIngredient, getByName, getByFirstLetter } from '../api';
+
 function SearchBar() {
   const history = useHistory();
+  const { pathname } = history.location;
   const { setApiResponse } = useContext(recipeContext);
   const [search, setSearch] = useState('');
   const [searchType, setSearchType] = useState('');
+
+  useEffect(() => {
+    const getApi = async (searchType) => {
+      switch (searchType) {
+      case 'name': {
+        const api = await getByName(pathname, search);
+        return (api);
+      }
+      case 'Ingredient': {
+        const api = await getbyIngredient(pathname, search);
+        return (api);
+      }
+      case 'first_letter': {
+        const api = await getByFirstLetter(pathname, search);
+        return (api);
+      }
+      default:
+        break;
+      }
+    };
+    setApiResponse(getApi);
+  }, [search, pathname, setApiResponse]);
+
   return (
     <>
       <input
