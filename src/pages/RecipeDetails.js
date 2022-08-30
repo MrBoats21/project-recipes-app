@@ -6,6 +6,7 @@ import iconShare from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { drinks, foods, recomenBebidas, recomenComidas } from '../api/foods';
+import { doneRecipes, recipeProgress } from '../helpers/functions';
 
 function RecipeDetails({ match }) {
   const { params: { recipeId }, url } = match;
@@ -55,8 +56,6 @@ function RecipeDetails({ match }) {
     const response = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (response) {
       const r = response.some((a) => a.id === id);
-      console.log(r ? blackHeartIcon : whiteHeartIcon);
-      console.log('teste', icons);
       return r ? blackHeartIcon : whiteHeartIcon;
     }
     return whiteHeartIcon;
@@ -159,7 +158,7 @@ function RecipeDetails({ match }) {
                 {' '}
                 -
                 {' '}
-                { { b } }
+                { a.qtd[index] }
               </li>
             ))}
           </ol>
@@ -206,14 +205,17 @@ function RecipeDetails({ match }) {
           </div>
         ))}
       </div>
-      <button
-        onClick={ () => history.push(`/${tipo}/${recipeId}/in-progress`) }
-        type="button"
-        style={ { position: 'fixed', bottom: '0px' } }
-        data-testid="start-recipe-btn"
-      >
-        Start Recipe
-      </button>
+
+      {doneRecipes() ? (
+        <button
+          onClick={ () => history.push(`/${tipo}/${recipeId}/in-progress`) }
+          type="button"
+          style={ { position: 'fixed', bottom: '0px' } }
+          data-testid="start-recipe-btn"
+        >
+          {recipeProgress ? 'Continue Recipe' : 'start recipe' }
+        </button>)
+        : ''}
     </div>
   );
 }

@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import useUpdate from '../Hooks/useUpdate';
-import { receiverD, receiverF, checkStorage } from '../helpers/functions';
+import { receiverD, receiverF, checkStorage, favoritos } from '../helpers/functions';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import iconShare from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
 function RecipeInProgress({ match }) {
+  const [favorits, setFavorits] = useState({});
+  const [icons, setIcons] = useState();
   const { params: { recipeId }, url } = match;
   const tipo = url.split('/')[1];
   const [receitaFood, setReceitaFood] = useState([{
@@ -22,11 +27,22 @@ function RecipeInProgress({ match }) {
   const [copyed, setCopyed] = useState([false]);
   const history = useHistory();
 
+  const favoritosAtivo = (id) => {
+    const response = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (response) {
+      const r = response.some((a) => a.id === id);
+      return r ? blackHeartIcon : whiteHeartIcon;
+    }
+    return whiteHeartIcon;
+  };
+
   useEffect(() => {
+    setIcons(favoritosAtivo(recipeId));
+
     if (tipo === 'foods') {
-      receiverF(recipeId, setReceitaFood);
+      receiverF(recipeId, setReceitaFood, setFavorits);
     } else {
-      receiverD(recipeId, setReceitaFood);
+      receiverD(recipeId, setReceitaFood, setFavorits);
     }
   }, [recipeId, tipo]);
 
@@ -77,6 +93,12 @@ function RecipeInProgress({ match }) {
     }
   };
 
+  function finish() {
+    history.push('/done-recipes');
+    const doneRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+  }
+
   return (
     <div>
       { receitaFood.map((a, i) => (
@@ -97,15 +119,17 @@ function RecipeInProgress({ match }) {
               setCopyed(true);
             } }
           >
-            Compartilhar
+            <img src={ iconShare } alt="img" />
             {copyed === true ? <p>Link copied!</p> : ''}
           </button>
 
           <button
+            onClick={ () => favoritos(favorits, setIcons, favoritosAtivo, recipeId) }
             data-testid="favorite-btn"
             type="button"
+            src={ icons }
           >
-            Favoritar
+            <img alt="ico" src={ icons } />
           </button>
           <h4>Ingredients</h4>
           <div style={ { display: 'flex', flexDirection: 'column' } }>
@@ -119,7 +143,7 @@ function RecipeInProgress({ match }) {
                   key={ index }
                   type="checkbox"
                   className="checkboxes"
-                  value={ { b } }
+                  value={ b }
                   checked={ usedIngredients.includes(b) }
                   onChange={ (event) => setIngredientsList(b, event) }
                 />
@@ -138,7 +162,7 @@ function RecipeInProgress({ match }) {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        onClick={ () => { history.push('/done-recipes'); } }
+        onClick={ finish }
         disabled={ disabled }
       >
         Finalizar receita

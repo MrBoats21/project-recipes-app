@@ -1,6 +1,3 @@
-// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
-
 const endFoods = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 const endDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 const recBebidas = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -39,31 +36,3 @@ export async function recomenComidas() {
   }
   return recomendacao;
 }
-
-// export function favoritosAtivo(id) {
-//   const response = JSON.parse(localStorage.getItem('favoriteRecipes'));
-//   if (response) {
-//     const r = response.some((a) => a.id === id);
-//     console.log(r ? blackHeartIcon : whiteHeartIcon);
-//     return r ? blackHeartIcon : whiteHeartIcon;
-//   } return whiteHeartIcon;
-// }
-
-// export function favoritos(payload) {
-//   const receitas = JSON.parse(localStorage.getItem('favoriteRecipes'));
-//   if (receitas !== null) {
-//     const booleano = receitas.some((a) => a.id === payload.id);
-//     console.log(booleano);
-//     if (booleano) {
-//       const value = receitas.filter((a) => a.id !== payload.id);
-//       return localStorage.setItem('favoriteRecipes',
-//         JSON.stringify(value));
-//     }
-//     const p = [...receitas, payload];
-//     return localStorage.setItem('favoriteRecipes',
-//       JSON.stringify(p));
-//   }
-//   localStorage.setItem('favoriteRecipes', JSON.stringify([payload]));
-//   favoritosAtivo(payload.id);
-//   console.log(favoritosAtivo(payload.id));
-// }
