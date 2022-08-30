@@ -18,8 +18,8 @@ function RecipeInProgress({ match }) {
     inst: '',
   }]);
   const [usedIngredients, setUsedIngredients] = useState([]);
-  const [disabled, setDisabled] = useState([true]);
-  const [copyed, setCopyed] = useState([false]);
+  const [disabled, setDisabled] = useState(true);
+  const [copyed, setCopyed] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -59,15 +59,15 @@ function RecipeInProgress({ match }) {
   useEffect(() => {
     const verifyCheckboxes = () => {
       const iLength = usedIngredients.length;
-      const boxList = document.getElementsByClassName('checkboxes');
-      if (iLength === boxList.length) {
+      const boxList = receitaFood[0].ingre.length;
+      if (iLength === boxList) {
         setDisabled(false);
       } else {
         setDisabled(true);
       }
     };
     verifyCheckboxes();
-  }, [usedIngredients]);
+  }, [usedIngredients, receitaFood]);
 
   const setIngredientsList = (iName, { target }) => {
     if (target.checked) {
