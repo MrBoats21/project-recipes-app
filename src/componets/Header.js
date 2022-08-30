@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ title }) {
   const [searchBtn, setSearchBtn] = useState(false);
@@ -29,7 +30,7 @@ function Header({ title }) {
           >
             <img src={ searchIcon } alt="Ícone de pesquisa" />
           </button>
-          {searchBtn && (<input type="text" data-testid="search-input" />)}
+          {searchBtn && <SearchBar />}
 
         </div>)}
       <h1 data-testid="page-title">{title}</h1>
