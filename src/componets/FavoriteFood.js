@@ -17,7 +17,6 @@ export default function FavoriteFoods(props) {
   const removeItemStorage = (recipeItem) => {
     const newStorageList = recipes.filter((recipe) => recipe.id !== recipeItem);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newStorageList));
-    setIsLike(true);
     setRecipes(newStorageList);
   };
   const recipeCopied = (pathname, id) => {
