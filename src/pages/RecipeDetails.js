@@ -159,7 +159,7 @@ function RecipeDetails({ match }) {
                 {' '}
                 -
                 {' '}
-                { { b } }
+                { a.qtd[index] }
               </li>
             ))}
           </ol>
