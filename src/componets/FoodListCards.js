@@ -4,7 +4,7 @@ import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import likeIcon from '../images/blackHeartIcon.svg';
 
-export default function FavoriteFoods(props) {
+export default function FoodListCards(props) {
   const { recipes, showMenuType, setRecipes } = props;
   const [recipeListType, setRecipeListType] = useState([]);
   const [isCopied, setIsCopied] = useState(0);

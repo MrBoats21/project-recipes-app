@@ -5,6 +5,7 @@ import recipeContext from './recipeContext';
 function RecipeProvider({ children }) {
   const [apiResponse, setApiResponse] = useState([]);
   const [mainLoading, setMainLoading] = useState(true);
+  const [showMenuType, setShowMenuType] = useState('all');
   return (
     <recipeContext.Provider
       value={ {
@@ -12,7 +13,8 @@ function RecipeProvider({ children }) {
         setApiResponse,
         mainLoading,
         setMainLoading,
-
+        showMenuType,
+        setShowMenuType,
       } }
     >
       { children }
