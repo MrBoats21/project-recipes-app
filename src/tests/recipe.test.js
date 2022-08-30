@@ -7,7 +7,6 @@ import RecipeProvider from "../contex/RecipeProvider";
 
 import renderWithRouter from '../helpers/RenderWithRouter';
 
-import {getInitialRecipes, getCategories, getByCategorie } from '../api';
 import * as api from '../api';
 
 import meals from '../../cypress/mocks/meals';

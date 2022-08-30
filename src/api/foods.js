@@ -2,6 +2,7 @@ const endFoods = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 const endDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 const recBebidas = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 const recComeidas = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+
 export async function foods(recipeId) {
   const result = await fetch(`${endFoods}${recipeId}`)
     .then((Response) => Response.json());
