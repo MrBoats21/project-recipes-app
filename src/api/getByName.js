@@ -3,13 +3,13 @@ const getByName = async (pathname, name) => {
     const END_POINT_FOODS = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
     const END_POINT_DRINKS = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`;
     if (pathname === '/foods') {
-      apiResponse = await fetch(END_POINT_FOODS)
+      const apiResponse = await fetch(END_POINT_FOODS)
         .then((response) => response.json());
-      return (apiResponse);
+      return (apiResponse.meals);
     } if (pathname === '/drinks') {
-      apiResponse = await fetch(END_POINT_DRINKS)
+      const apiResponse = await fetch(END_POINT_DRINKS)
         .then((response) => response.json());
-      return (apiResponse);
+      return (apiResponse.drinks);
     }
     throw new Error('Pathname inválido');
   } catch (error) {
