@@ -25,7 +25,7 @@ export async function receiverF(id, callback, secondCallback, type = 'favorite')
     name: result.strMeal,
     image: result.strMealThumb,
     doneDate: getCurrentDate('/'),
-    tags: result.strTags === '' ? [] : result.strTags.split(','),
+    tags: !result.strTags || result.strTags === '' ? [] : result.strTags.split(','),
   };
   callback([{
     img: result.strMealThumb,
@@ -112,14 +112,14 @@ export const favoritos = (payload, callback, secondCallback, id) => {
   }
 };
 
-export function doneRecipes(id) {
+export function doneRecipes(id, path) {
   const doneStorage = JSON.parse(localStorage.getItem('doneRecipes'));
   const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const storageKey = path.includes('/foods') ? 'meals' : 'cocktails';
   if (doneStorage && doneStorage.some((c) => c.id === id)) {
     return ('done');
   }
-  if (inProgressStorage
-    && (inProgressStorage.meals[id] || inProgressStorage.cocktails[id])) {
+  if (inProgressStorage && inProgressStorage[storageKey][id]) {
     return ('inProgress');
   }
   return ('notMade');

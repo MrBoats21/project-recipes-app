@@ -211,14 +211,15 @@ function RecipeDetails({ match }) {
         ))}
       </div>
 
-      {doneRecipes(recipeId) !== 'done' && (
+      {doneRecipes(recipeId, url) !== 'done' && (
         <button
           onClick={ () => history.push(`/${tipo}/${recipeId}/in-progress`) }
           type="button"
           style={ { position: 'fixed', bottom: '0px' } }
           data-testid="start-recipe-btn"
         >
-          {doneRecipes(recipeId) === 'inProgress' ? 'Continue Recipe' : 'Start Recipe' }
+          {doneRecipes(recipeId, url) === 'inProgress'
+            ? 'Continue Recipe' : 'Start Recipe' }
         </button>)}
     </div>
   );
