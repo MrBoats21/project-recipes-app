@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import useUpdate from '../Hooks/useUpdate';
 import { receiverD, receiverF, checkStorage, favoritos } from '../helpers/functions';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import iconShare from '../images/shareIcon.svg';
+import getCurrentDate from '../helpers/getDate';
 
 const copy = require('clipboard-copy');
 
 function RecipeInProgress({ match }) {
   const [favorits, setFavorits] = useState({});
+  const [done, setDone] = useState({
+    id: '',
+    type: '',
+    nationality: '',
+    category: '',
+    alcoholicOrNot: '',
+    name: '',
+    image: '',
+    doneDate: getCurrentDate('/'),
+    tags: '',
+  });
+  const [initialLoad, setInitialLoad] = useState(true);
   const [icons, setIcons] = useState();
   const { params: { recipeId }, url } = match;
   const tipo = url.split('/')[1];
@@ -23,9 +35,10 @@ function RecipeInProgress({ match }) {
     inst: '',
   }]);
   const [usedIngredients, setUsedIngredients] = useState([]);
-  const [disabled, setDisabled] = useState([true]);
-  const [copyed, setCopyed] = useState([false]);
+  const [disabled, setDisabled] = useState(true);
+  const [copyed, setCopyed] = useState(false);
   const history = useHistory();
+  const { pathname } = history.location;
 
   const favoritosAtivo = (id) => {
     const response = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -59,8 +72,8 @@ function RecipeInProgress({ match }) {
     getStorage();
   }, [recipeId, url]);
 
-  useUpdate(() => {
-    const setStorage = () => {
+  useEffect(() => {
+    if (!initialLoad) {
       let key = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const changedKey = url.includes('foods') ? key.meals : key.cocktails;
       const keyName = url.includes('foods') ? 'meals' : 'cocktails';
@@ -68,22 +81,41 @@ function RecipeInProgress({ match }) {
       key = { ...key, [keyName]: changedKey };
 
       localStorage.setItem('inProgressRecipes', JSON.stringify(key));
-    };
-    setStorage();
-  }, [usedIngredients, recipeId, url]);
+    }
+  }, [usedIngredients]);
+
+  useEffect(() => {
+    if (initialLoad) {
+      setInitialLoad(false);
+    } else {
+      const doneLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (doneLocalStorage) {
+        localStorage.setItem('doneRecipes', JSON.stringify([...doneLocalStorage, done]));
+      } else { localStorage.setItem('doneRecipes', JSON.stringify([done])); }
+
+      const key = pathname.includes('/foods') ? 'meals' : 'cocktails';
+      const InProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const listByType = InProgress[key];
+      delete listByType[recipeId];
+      const newInProgress = { ...InProgress, [key]: listByType };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
+      console.log(JSON.parse(localStorage.getItem('inProgressRecipes')));
+      history.push('/done-recipes');
+    }
+  }, [done]);
 
   useEffect(() => {
     const verifyCheckboxes = () => {
       const iLength = usedIngredients.length;
-      const boxList = document.getElementsByClassName('checkboxes');
-      if (iLength === boxList.length) {
+      const boxList = receitaFood[0].ingre.length;
+      if (iLength === boxList) {
         setDisabled(false);
       } else {
         setDisabled(true);
       }
     };
     verifyCheckboxes();
-  }, [usedIngredients]);
+  }, [usedIngredients, receitaFood]);
 
   const setIngredientsList = (iName, { target }) => {
     if (target.checked) {
@@ -94,9 +126,11 @@ function RecipeInProgress({ match }) {
   };
 
   function finish() {
-    history.push('/done-recipes');
-    const doneRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    if (tipo === 'foods') {
+      receiverF(recipeId, () => {}, setDone, 'done');
+    } else {
+      receiverD(recipeId, () => {}, setDone, 'done');
+    }
   }
 
   return (
@@ -162,7 +196,7 @@ function RecipeInProgress({ match }) {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        onClick={ finish }
+        onClick={ () => finish() }
         disabled={ disabled }
       >
         Finalizar receita
