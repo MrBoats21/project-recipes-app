@@ -34,37 +34,45 @@ function Profile() {
     }
   };
   return (
-    <div>
+    <>
       <Header title="Profile" />
-
-      <h3 data-testid="profile-email">{`${userEmail}`}</h3>
-
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        onClick={ () => { redirect('done-recipes'); } }
+      <h3 className="text-center mt-5" data-testid="profile-email">{`${userEmail}`}</h3>
+      <div
+        className="d-flex flex-column align-items-center justify-content-center mt-5 pt-5"
       >
-        Done Recipes
-      </button>
+        <button
+          className="btn btn-warning"
+          style={ { width: '10rem' } }
+          type="button"
+          data-testid="profile-done-btn"
+          onClick={ () => { redirect('done-recipes'); } }
+        >
+          Done Recipes
+        </button>
 
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        onClick={ () => { redirect('favorite-recipes'); } }
-      >
-        Favorite Recipes
-      </button>
+        <button
+          className="btn btn-warning my-3"
+          style={ { width: '10rem' } }
+          type="button"
+          data-testid="profile-favorite-btn"
+          onClick={ () => { redirect('favorite-recipes'); } }
+        >
+          Favorite Recipes
+        </button>
 
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ () => { redirect(); } }
-      >
-        Logout
-      </button>
+        <button
+          className="btn btn-warning"
+          style={ { width: '10rem' } }
+          type="button"
+          data-testid="profile-logout-btn"
+          onClick={ () => { redirect(); } }
+        >
+          Logout
+        </button>
 
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

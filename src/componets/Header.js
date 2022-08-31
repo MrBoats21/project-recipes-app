@@ -8,21 +8,31 @@ import SearchBar from './SearchBar';
 function Header({ title }) {
   const [searchBtn, setSearchBtn] = useState(false);
   return (
-    <header>
-      <Link to="/profile">
+    <header
+      className="d-flex justify-content-around pl-2
+      bg-warning py-3 align-items-center mb-2 flex-wrap"
+    >
+      <Link
+        to="/profile"
+        className="btn btn-warning rounded-circle"
+      >
         <img
+          style={ { width: '2rem', height: '2.5rem' } }
           data-testid="profile-top-btn"
-          src={profileIcon}
+          src={ profileIcon }
           alt="Ícone do perfil"
         />
       </Link>
-      {title !== 'Profile' &&
-        title !== 'Done Recipes' &&
-        title !== 'Favorite Recipes' && (
+      <h1 data-testid="page-title">{title}</h1>
+      {title !== 'Profile'
+        && title !== 'Done Recipes'
+        && title !== 'Favorite Recipes'
+        && (
           <div>
             <button
+              className="btn btn-warning rounded-circle"
               type="button"
-              src={searchIcon}
+              src={ searchIcon }
               data-testid="search-top-btn"
               alt="Ícone de pesquisa"
               onClick={
@@ -31,12 +41,17 @@ function Header({ title }) {
                   : () => setSearchBtn(false)
               }
             >
-              <img src={searchIcon} alt="Ícone de pesquisa" />
+              <img
+                style={ { width: '2rem', height: '2.5rem' } }
+                src={ searchIcon }
+                alt="Ícone de pesquisa"
+              />
             </button>
-            {searchBtn && <SearchBar />}
           </div>
         )}
-      <h1 data-testid="page-title">{title}</h1>
+      <span>
+        {searchBtn && <SearchBar />}
+      </span>
     </header>
   );
 }

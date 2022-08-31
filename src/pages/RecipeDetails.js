@@ -133,27 +133,35 @@ function RecipeDetails({ match }) {
     }
   }
   return (
-    <div>
+    <div className="">
       {receitaFood.map((a, i) => (
-        <div key={ i }>
+        <div className="d-flex flex-column align-items-center" key={ i }>
           <img
             data-testid="recipe-photo"
             src={ a.img }
             alt={ a.titulo }
             width="300px"
           />
-          <button data-testid="share-btn" type="button" onClick={ Copied }>
-            <img src={ iconShare } alt="img" />
-          </button>
-          {isCopied ? <p>Link copied!</p> : ''}
-          <button
-            onClick={ () => favoritos(favorits) }
-            data-testid="favorite-btn"
-            type="button"
-            src={ icons }
-          >
-            <img alt="ico" src={ icons } />
-          </button>
+          <div className="my-3">
+            <button
+              className="btn btn-warning mr-2"
+              data-testid="share-btn"
+              type="button"
+              onClick={ Copied }
+            >
+              <img src={ iconShare } alt="img" />
+            </button>
+            {isCopied ? <p>Link copied!</p> : ''}
+            <button
+              className="btn btn-warning ml-2"
+              onClick={ () => favoritos(favorits) }
+              data-testid="favorite-btn"
+              type="button"
+              src={ icons }
+            >
+              <img alt="ico" src={ icons } />
+            </button>
+          </div>
           <h4 data-testid="recipe-title">{a.titulo}</h4>
           <p data-testid="recipe-category">{a.cat}</p>
           <ol>
@@ -170,7 +178,7 @@ function RecipeDetails({ match }) {
               </li>
             ))}
           </ol>
-          <p data-testid="instructions">{a.inst}</p>
+          <p className="text-justify px-4" data-testid="instructions">{a.inst}</p>
           {tipo === 'foods' ? (
             <iframe
               data-testid="video"
@@ -213,9 +221,10 @@ function RecipeDetails({ match }) {
 
       {doneRecipes() ? (
         <button
+          className="btn btn-warning"
           onClick={ () => history.push(`/${tipo}/${recipeId}/in-progress`) }
           type="button"
-          style={ { position: 'fixed', bottom: '0px' } }
+          style={ { position: 'fixed', bottom: '0px', right: 'opx' } }
           data-testid="start-recipe-btn"
         >
           {recipeProgress ? 'Continue Recipe' : 'start recipe' }

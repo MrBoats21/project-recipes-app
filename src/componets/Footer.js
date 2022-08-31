@@ -22,7 +22,7 @@ function Footer() {
     <footer data-testid="footer">
       <button
         type="button"
-        className="footerButton"
+        className="footerButton btn btn-warning rounded-0"
         data-testid="drinks-bottom-btn"
         src={ drinkIcon }
         onClick={ () => changePageBtn('drinks') }
@@ -33,7 +33,7 @@ function Footer() {
 
       <button
         type="button"
-        className="footerButton"
+        className="footerButton btn btn-warning rounded-0"
         data-testid="food-bottom-btn"
         onClick={ () => changePageBtn('foods') }
         src={ mealIcon }

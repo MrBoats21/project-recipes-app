@@ -51,29 +51,44 @@ function Categories() {
     const lastItem = 5;
     return (
       categories.slice(0, lastItem).map((c) => (
-        <button
-          type="button"
-          key={ c.strCategory }
-          data-testid={ `${c.strCategory}-category-filter` }
-          onClick={ () => handleButton(c.strCategory) }
-        >
-          { c.strCategory }
-
-        </button>
+        <div key={ c.strCategory } className="col mb-2">
+          <button
+            style={ {
+              width: '5rem',
+              fontSize: '0.5rem',
+              fontWeight: 'bold',
+              backgroundColor: '#452009',
+              color: 'white' } }
+            className="btn btn-dark"
+            type="button"
+            data-testid={ `${c.strCategory}-category-filter` }
+            onClick={ () => handleButton(c.strCategory) }
+          >
+            { c.strCategory }
+          </button>
+        </div>
       ))
     );
   };
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={ () => handleAllButton() }
-        data-testid="All-category-filter"
-      >
-        All
-
-      </button>
+    <div className="row text-center">
+      <div className="col">
+        <button
+          style={ {
+            width: '5rem',
+            fontSize: '0.5rem',
+            fontWeight: 'bold',
+            backgroundColor: '#452009',
+            color: 'white' } }
+          className="btn btn-dark"
+          type="button"
+          onClick={ () => handleAllButton() }
+          data-testid="All-category-filter"
+        >
+          All
+        </button>
+      </div>
       { renderCategories() }
     </div>
     // <label htmlFor="">

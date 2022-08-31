@@ -102,7 +102,7 @@ function RecipeInProgress({ match }) {
   return (
     <div>
       { receitaFood.map((a, i) => (
-        <div key={ i }>
+        <div className="d-flex flex-column align-items-center" key={ i }>
           <img
             data-testid="recipe-photo"
             src={ a.img }
@@ -111,28 +111,32 @@ function RecipeInProgress({ match }) {
           />
           <h2 data-testid="recipe-title">{a.titulo}</h2>
           <p data-testid="recipe-category">{a.cat}</p>
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ () => {
-              copy(`http://localhost:3000/${tipo}/${recipeId}`);
-              setCopyed(true);
-            } }
-          >
-            <img src={ iconShare } alt="img" />
-            {copyed === true ? <p>Link copied!</p> : ''}
-          </button>
+          <div className="mb-3">
+            <button
+              className="btn btn-warning mr-2"
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => {
+                copy(`http://localhost:3000/${tipo}/${recipeId}`);
+                setCopyed(true);
+              } }
+            >
+              <img src={ iconShare } alt="img" />
+              {copyed === true ? <p>Link copied!</p> : ''}
+            </button>
+            <button
+              className="btn btn-warning ml-2"
+              onClick={ () => favoritos(favorits, setIcons, favoritosAtivo, recipeId) }
+              data-testid="favorite-btn"
+              type="button"
+              src={ icons }
+            >
+              <img alt="ico" src={ icons } />
+            </button>
+          </div>
 
-          <button
-            onClick={ () => favoritos(favorits, setIcons, favoritosAtivo, recipeId) }
-            data-testid="favorite-btn"
-            type="button"
-            src={ icons }
-          >
-            <img alt="ico" src={ icons } />
-          </button>
           <h4>Ingredients</h4>
-          <div style={ { display: 'flex', flexDirection: 'column' } }>
+          <div className="d-flex flex-column">
             {a.ingre.map((b, index) => (
               <label
                 key={ index }
@@ -152,6 +156,7 @@ function RecipeInProgress({ match }) {
             ))}
           </div>
           <p
+            className="text-justify px-4"
             data-testid="instructions"
           >
             {a.inst}
@@ -159,14 +164,17 @@ function RecipeInProgress({ match }) {
         </div>
       ))}
 
-      <button
-        data-testid="finish-recipe-btn"
-        type="button"
-        onClick={ finish }
-        disabled={ disabled }
-      >
-        Finalizar receita
-      </button>
+      <div className="d-flex justify-content-center mb-3">
+        <button
+          className="btn btn-warning"
+          data-testid="finish-recipe-btn"
+          type="button"
+          onClick={ finish }
+          disabled={ disabled }
+        >
+          Finalizar receita
+        </button>
+      </div>
     </div>
   );
 }
