@@ -1,52 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Header from '../componets/Header';
-import FavoriteFoods from '../componets/FavoriteFood';
+import FoodListCards from '../componets/FoodListCards';
+import TypeSelector from '../componets/TypeSelector';
+import recipeContext from '../contex/recipeContext';
 
 function FavoriteRecipes() {
-  const [recipes, setRecipes] = useState([]);
-  const [showMenuType, setShowMenuType] = useState('all');
+  const [recipes, setRecipes] = useState();
+  const { showMenuType, setShowMenuType } = useContext(recipeContext);
   useEffect(() => {
+    setShowMenuType('all');
     setRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')));
-  }, []);
-  console.log(recipes);
+  }, [setShowMenuType]);
+
   return (
     <section className="vh-100">
       <Header title="Favorite Recipes" />
-      {/* Componentizar */}
       <div className="mt-3 pt-3">
-        <div className="nav d-flex justify-content-around my-2">
-          <button
-            data-testid="filter-by-all-btn"
-            className="btn btn-warning w-25"
-            type="button"
-            onClick={ () => setShowMenuType('all') }
-          >
-            All
-          </button>
-          <button
-            data-testid="filter-by-food-btn"
-            className="btn btn-warning w-25"
-            type="button"
-            onClick={ () => setShowMenuType('drink') }
-          >
-            Food
-          </button>
-          <button
-            data-testid="filter-by-drink-btn"
-            className="btn btn-warning w-25"
-            type="button"
-            onClick={ () => setShowMenuType('food') }
-          >
-            Drinks
-          </button>
-        </div>
-        {/* Componentizar */}
+        <TypeSelector />
         <div className="card-area container py-2 d-flex justify-content-center">
           <div className="row w-100">
-            <FavoriteFoods
+            <FoodListCards
               recipes={ recipes }
               showMenuType={ showMenuType }
               setRecipes={ setRecipes }
+              type="favorite"
             />
           </div>
         </div>

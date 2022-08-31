@@ -6,7 +6,7 @@ import iconShare from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { drinks, foods, recomenBebidas, recomenComidas } from '../api/foods';
-import { doneRecipes, recipeProgress } from '../helpers/functions';
+import { doneRecipes } from '../helpers/functions';
 
 function RecipeDetails({ match }) {
   const {
@@ -219,7 +219,7 @@ function RecipeDetails({ match }) {
         ))}
       </div>
 
-      {doneRecipes() ? (
+      {doneRecipes(recipeId, url) !== 'done' && (
         <button
           className="btn btn-warning"
           onClick={ () => history.push(`/${tipo}/${recipeId}/in-progress`) }
@@ -227,9 +227,9 @@ function RecipeDetails({ match }) {
           style={ { position: 'fixed', bottom: '0px', right: 'opx' } }
           data-testid="start-recipe-btn"
         >
-          {recipeProgress ? 'Continue Recipe' : 'start recipe' }
-        </button>)
-        : ''}
+          {doneRecipes(recipeId, url) === 'inProgress'
+            ? 'Continue Recipe' : 'Start Recipe' }
+        </button>)}
     </div>
   );
 }
