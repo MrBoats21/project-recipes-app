@@ -49,9 +49,7 @@ function Header({ title }) {
             </button>
           </div>
         )}
-      <span>
-        {searchBtn && <SearchBar />}
-      </span>
+      {searchBtn && <SearchBar />}
     </header>
   );
 }

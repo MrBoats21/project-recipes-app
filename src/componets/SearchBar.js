@@ -104,7 +104,7 @@ function SearchBar() {
           //   width: '40%' } }
           style={ { backgroundColor: '#452009',
             color: 'white',
-            width: '40%',
+            width: '100%',
           } }
           className="btn rounded p-1 "
           type="button"
