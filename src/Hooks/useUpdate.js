@@ -9,7 +9,7 @@ function useUpdate(callback, dependecies = []) {
     } else {
       return callback();
     }
-  }, [dependecies, callback]);
+  }, [...dependecies, callback]);
 }
 
 export default useUpdate;

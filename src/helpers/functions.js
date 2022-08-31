@@ -1,12 +1,32 @@
 import { drinks, foods } from '../api/foods';
+import getCurrentDate from './getDate';
 
-export async function receiverF(id, callback, secondCallback) {
+export async function receiverF(id, callback, secondCallback, type = 'favorite') {
   const result = await foods(id);
   const ingr = Object.entries(result)
     .filter((a) => a[0].includes('strIngredient') && a[1] !== '' && a[1] !== null);
   const instr = Object.entries(result)
     .filter((a) => a[0].includes('strMeasure') && a[1] !== '' && a[1] !== null);
-
+  const secondFavorite = {
+    id: result.idMeal,
+    type: 'food',
+    nationality: result.strArea ? result.strArea : '',
+    category: result.strCategory ? result.strCategory : '',
+    alcoholicOrNot: '',
+    name: result.strMeal,
+    image: result.strMealThumb,
+  };
+  const secondDone = {
+    id: result.idMeal,
+    type: 'food',
+    nationality: result.strArea ? result.strArea : '',
+    category: result.strCategory ? result.strCategory : '',
+    alcoholicOrNot: '',
+    name: result.strMeal,
+    image: result.strMealThumb,
+    doneDate: getCurrentDate('/'),
+    tags: result.strTags === '' ? [] : result.strTags.split(','),
+  };
   callback([{
     img: result.strMealThumb,
     titulo: result.strMeal,
@@ -15,32 +35,19 @@ export async function receiverF(id, callback, secondCallback) {
     qtd: instr.map((a) => a[1]),
     inst: result.strInstructions,
   }]);
-  secondCallback({
-    id: result.idMeal,
-    type: 'food',
-    nationality: result.strArea ? result.strArea : '',
-    category: result.strCategory ? result.strCategory : '',
-    alcoholicOrNot: '',
-    name: result.strMeal,
-    image: result.strMealThumb,
-  });
+  if (type === 'favorite') {
+    secondCallback(secondFavorite);
+  } else { secondCallback(secondDone); }
 }
 
-export async function receiverD(id, callback, secondCallback) {
+export async function receiverD(id, callback, secondCallback, type = 'favorite') {
   const result = await drinks(id);
   const ingr = Object.entries(result)
     .filter((a) => a[0].includes('strIngredient') && a[1] !== '' && a[1] !== null);
   const instr = Object.entries(result)
     .filter((a) => a[0].includes('strMeasure') && a[1] !== '' && a[1] !== null);
-  callback([{
-    img: result.strDrinkThumb,
-    titulo: result.strDrink,
-    cat: result.strAlcoholic,
-    ingre: ingr.map((a) => a[1]),
-    qtd: instr.map((a) => a[1]),
-    inst: result.strInstructions,
-  }]);
-  secondCallback({
+
+  const secondFavorite = {
     id: result.idDrink,
     type: 'drink',
     nationality: result.strArea ? result.strArea : '',
@@ -49,7 +56,31 @@ export async function receiverD(id, callback, secondCallback) {
       ? 'Alcoholic' : 'non-Alcoholic',
     name: result.strDrink,
     image: result.strDrinkThumb,
-  });
+  };
+  const secondDone = {
+    id: result.idDrink,
+    type: 'drink',
+    nationality: result.strArea ? result.strArea : '',
+    category: result.strCategory ? result.strCategory : '',
+    alcoholicOrNot: result.strAlcoholic.includes('Alcoholic')
+      ? 'Alcoholic' : 'non-Alcoholic',
+    name: result.strDrink,
+    image: result.strDrinkThumb,
+    doneDate: getCurrentDate('/'),
+    tags: !result.strTags || result.strTags === '' ? [] : result.strTags.split(','),
+  };
+  if (type === 'favorite') {
+    secondCallback(secondFavorite);
+  } else { secondCallback(secondDone); }
+
+  callback([{
+    img: result.strDrinkThumb,
+    titulo: result.strDrink,
+    cat: result.strAlcoholic,
+    ingre: ingr.map((a) => a[1]),
+    qtd: instr.map((a) => a[1]),
+    inst: result.strInstructions,
+  }]);
 }
 
 export const checkStorage = () => {
@@ -81,9 +112,17 @@ export const favoritos = (payload, callback, secondCallback, id) => {
   }
 };
 
-export function doneRecipes() {
-  const recipe = JSON.parse(localStorage.getItem('doneRecipes'));
-  return !recipe;
+export function doneRecipes(id) {
+  const doneStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+  const inProgressStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  if (doneStorage && doneStorage.some((c) => c.id === id)) {
+    return ('done');
+  }
+  if (inProgressStorage
+    && (inProgressStorage.meals[id] || inProgressStorage.cocktails[id])) {
+    return ('inProgress');
+  }
+  return ('notMade');
 }
 
 export function recipeProgress() {

@@ -5,13 +5,12 @@ import TypeSelector from '../componets/TypeSelector';
 import recipeContext from '../contex/recipeContext';
 
 function FavoriteRecipes() {
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState();
   const { showMenuType, setShowMenuType } = useContext(recipeContext);
   useEffect(() => {
     setShowMenuType('all');
     setRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')));
   }, [setShowMenuType]);
-  console.log(recipes)
 
   return (
     <section className="vh-100">
@@ -24,6 +23,7 @@ function FavoriteRecipes() {
               recipes={ recipes }
               showMenuType={ showMenuType }
               setRecipes={ setRecipes }
+              type="favorite"
             />
           </div>
         </div>
