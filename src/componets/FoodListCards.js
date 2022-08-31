@@ -41,7 +41,7 @@ export default function FoodListCards(props) {
   if (recipes) {
     return (recipeListType.map((recipe, index) => (
       <div
-        className="border col-12 my-1 rounded p-0 d-flex"
+        className="border col-12 my-1 rounded p-3 d-flex"
         style={ { boxShadow: '0px 2px 3px 0px #ffc107' } }
         key={ recipe.id }
       >
@@ -75,7 +75,13 @@ export default function FoodListCards(props) {
             <p data-testid={ `${index}-horizontal-done-date` }>{ recipe.doneDate}</p>
           )}
           { type === 'done' && recipe.tags !== [] && recipe.tags.map((c) => (
-            <li key={ c } data-testid={ `${index}-${c}-horizontal-tag` }>{ c }</li>
+            <li
+              className="my-3"
+              key={ c }
+              data-testid={ `${index}-${c}-horizontal-tag` }
+            >
+              { c }
+            </li>
           ))}
           <div className="w-100 d-flex justify-content-around">
             <button
