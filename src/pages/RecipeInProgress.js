@@ -206,7 +206,7 @@ function RecipeInProgress({ match }) {
           onClick={ () => finish() }
           disabled={ disabled }
         >
-          Finalizar receita
+          Finish recipe
         </button>
       </div>
     </div>
