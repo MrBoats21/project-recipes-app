@@ -2,7 +2,7 @@
 
 Projeto ainda em desenvolvimento!
 
-Esse projeto foi desenvolvido durante o curso da trybe a fim de praticar as habilidades com react.js, hooks e estado de componentes.
+Esse projeto foi desenvolvido durante o curso da trybe a fim de praticar as habilidades com react.js, hooks e estado de componentes. A aplicação simula um site onde pessoas podem fazer comidas e bebidas deliciosas e compartilhar as receitas que usaram.
 
 <h3>Instalação:</h3>
 
