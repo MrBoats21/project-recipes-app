@@ -4,7 +4,7 @@ Projeto ainda em desenvolvimento!
 
 Esse projeto foi desenvolvido durante o curso da trybe a fim de praticar as habilidades com react.js, hooks e estado de componentes.
 
-Instalação:  
+<h3>Instalação:</h3>
 
 - Faça o clone do projeto usando o comando `git clone git@github.com:MrBoats21/project-recipes-app.git` no terminal.
 
@@ -13,7 +13,7 @@ Instalação:
 Inicie a aplicação com:
   `npm start`
  
-Funcionalidades:
+<h3>Funcionalidades:</h3>
 
 - Página de login funcional, entre no aplicativo com um email e senha de sua preferência e o email aparecerá na página do usuário
 
@@ -29,3 +29,6 @@ O projeto foi desenvolvido de forma que fique melhor visualizado em um dispositi
 
 <h2>Agradecimentos</h2>
 <a href='https://github.com/BrandtLC'>BrandtLC</a>
+<a href='https://github.com/GelsoS'>GelsoS</a> 
+<a href='https://github.com/adrianotribeiro'>adrianotribeiro</a> 
+
