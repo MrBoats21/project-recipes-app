@@ -3,3 +3,4 @@ src/serviceWorker.js
 cypress/*
 coverage/*
 src/tests
+README.md
