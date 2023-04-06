@@ -28,7 +28,7 @@ Inicie a aplicação com:
 O projeto foi desenvolvido de forma que fique melhor visualizado em um dispositivo móvel, para visualizar melhor por exemplo, utilize o site Responsinator.com e use a url `localhost:3000`.
 
 <h2>Agradecimentos</h2>
-<a href='https://github.com/BrandtLC'>BrandtLC</a>
-<a href='https://github.com/GelsoS'>GelsoS</a> 
+<a href='https://github.com/BrandtLC'>BrandtLC</a> <br/>
+<a href='https://github.com/GelsoS'>GelsoS</a> <br/>
 <a href='https://github.com/adrianotribeiro'>adrianotribeiro</a> 
 
