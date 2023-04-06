@@ -6,7 +6,7 @@ Esse projeto foi desenvolvido durante o curso da trybe a fim de praticar as habi
 
 Instalação:  
 
-- Faça o clone do projeto usando o comando`git clone git@github.com:MrBoats21/project-recipes-app.git` no terminal.
+- Faça o clone do projeto usando o comando `git clone git@github.com:MrBoats21/project-recipes-app.git` no terminal.
 - Abra um terminal na pasta ou navegue até ela e use o comando `npm i`
 
 Inicie a aplicação com:
