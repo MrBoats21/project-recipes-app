@@ -26,3 +26,6 @@ Funcionalidades:
 - A qualquer momento você pode realizar o logout e entrar com um novo email e senha, ao recarregar a página seu login será salvo para visitas futuras e será efetuado automaticamente, a não ser que você realize um logout.
   
 O projeto foi desenvolvido de forma que fique melhor visualizado em um dispositivo móvel, para visualizar melhor por exemplo, utilize o site Responsinator.com e use a url `localhost:3000`.
+
+<h2>Agradecimentos</h2>
+<a href='https://github.com/BrandtLC'>BrandtLC</a>
